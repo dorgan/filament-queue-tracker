@@ -48,7 +48,7 @@ class QueueMonitorResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table
+        $table = $table
             ->columns([
                 TextColumn::make('status')
                     ->badge()
@@ -115,6 +115,25 @@ class QueueMonitorResource extends Resource
                         return $query;
                     }),
             ]);
+            
+            if (class_exists("\\BinaryBuilds\\FilamentFailedJobs\\FilamentFailedJobsPlugin")) {
+                $table = $table->pushRecordActions([
+                    Action::make('view_failed_job')
+                        ->label(__('filament-queue-tracker::translations.view_failed_job'))
+                        ->url(function(QueueMonitor $record): string {
+                            $failedJob = \BinaryBuilds\FilamentFailedJobs\Models\FailedJob::where('uuid', $record->job_id)->first();
+                            if (!is_null($failedJob)) {
+                                return \BinaryBuilds\FilamentFailedJobs\Resources\FailedJobs\FailedJobResource::getUrl('view', ['record' => $failedJob->id]);
+                            } else {
+                                return "";
+                            }
+                        })
+                        ->visible(fn (QueueMonitor $record): bool => $record->failed)
+                        ->icon('heroicon-o-information-circle')
+                ]);
+            }
+
+            return $table;
     }
 
     public static function getNavigationBadge(): ?string

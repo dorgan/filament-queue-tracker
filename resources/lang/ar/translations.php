@@ -20,4 +20,5 @@ return [
     'details' => 'التفاصيل',
     'attempts' => 'المحاولات',
     'exception' => 'Exception',
+    'view_failed_job' => 'عرض الوظيفة الفاشلة',
 ];

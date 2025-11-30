@@ -20,4 +20,5 @@ return [
     'details' => 'Details',
     'attempts' => 'Attempts',
     'exception' => 'Exception',
+    'view_failed_job' => 'View Failed Job',
 ];

@@ -20,4 +20,5 @@ return [
     'details' => 'Details',
     'attempts' => 'Versuche',
     'exception' => 'Exception',
+    'view_failed_job' => 'Fehlgeschlagenen Auftrag Anzeigen',
 ];
