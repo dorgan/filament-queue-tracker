@@ -120,7 +120,7 @@ class QueueMonitorResource extends Resource
                 $table = $table->pushRecordActions([
                     Action::make('view_failed_job')
                         ->label(__('filament-queue-tracker::translations.view_failed_job'))
-                        ->url(function(QueueMonitor $record): string {
+                        ->url(function (QueueMonitor $record): string {
                             $failedJob = \BinaryBuilds\FilamentFailedJobs\Models\FailedJob::where('uuid', $record->job_id)->first();
                             if (!is_null($failedJob)) {
                                 return \BinaryBuilds\FilamentFailedJobs\Resources\FailedJobs\FailedJobResource::getUrl('view', ['record' => $failedJob->id]);
