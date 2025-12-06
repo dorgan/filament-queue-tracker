@@ -128,7 +128,10 @@ class QueueMonitorResource extends Resource
                                 return "";
                             }
                         })
-                        ->visible(fn (QueueMonitor $record): bool => $record->failed)
+                        ->visible(fn (QueueMonitor $record): bool =>
+                            $record->failed &&
+                            \BinaryBuilds\FilamentFailedJobs\Models\FailedJob::where('uuid', $record->job_id)->exists()
+                        )
                         ->icon('heroicon-o-information-circle')
                 ]);
             }
